@@ -1,0 +1,58 @@
+//tag::ref-doc[]
+= CoAP Observe Source
+
+Subscribes to CoAP `observable` resources. Listens for CoAP requests updates and emits the body as a message payload.
+The message Content-Type is extracted from the request format type if available or defaults to `text/*` otherwise.
+The payload is byte array.
+
+== Input
+
+N/A
+
+== Output
+
+=== mode = contents
+
+==== Headers:
+
+* * `Content-Type` - Request/s format type
+
+==== Payload:
+
+A `byte[]` filled with the request payload.
+
+== Options
+
+The **$$file$$** $$source$$ has the following options:
+
+//tag::configuration-properties[]
+$$coap.observe.url$$:: $$<documentation missing>$$ *($$String$$, default: `$$<none>$$`)*
+//end::configuration-properties[]
+
+The `ref` option is useful in some cases in which the file contents are large and it would be more efficient to send the file path.
+
+== Build
+
+```
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+
+You can find the corresponding binder based projects here. You can then cd into one of the folders and build it:
+
+$ ./mvnw clean package
+```
+
+== Examples
+
+```
+java -jar coap-observe-source.jar --coap.observe.url=coap://californium.eclipse.org:5683/obs
+```
+
+with `DTSL`
+```
+java -jar coap-observe-source.jar --coap.observe.url=coaps://californium.eclipse.org:5684/obs --coap.dtls.dtlsEnabled=true \
+    --coap.dtls.keyStoreLocation=file:/<full path>/clientKeyStore.jks \
+    --coap.trustStoreLocation=file:/<full path>/cacerts
+```
+
+//end::ref-doc[]

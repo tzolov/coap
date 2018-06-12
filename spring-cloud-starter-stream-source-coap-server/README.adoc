@@ -1,0 +1,76 @@
+//tag::ref-doc[]
+= CoAP Server Source
+
+A source application that listens for CoAP requests and emits the body as a message payload.
+The message Content-Type is extracted from the request format type if available or defaults to `text/*` otherwise.
+The payload is byte array.
+
+Handles the `POST`, `PUT` and `DELETE` CoAP methods. The `GET` method exposes a statistics information.
+
+== Input
+
+N/A
+
+== Output
+
+=== Headers
+
+* `contentType` - Request/s format type
+* `coap_method` - CoAP method (`POST`, `PUT` or `DELETE`)
+* `coap_remoteIp` - Source's host address
+* `coap_remotePort` - Source's host port
+
+
+=== Payload
+
+* `byte[]`
+
+== Options
+
+The **$$file$$** $$sink$$ has the following options:
+
+//tag::configuration-properties[]
+$$coap.server.path$$:: $$CoAP Resource path withing the CoAP Server$$ *($$String$$, default: `$$/scdf$$`)*
+$$coap.server.port$$:: $$CoAP Server port.$$ *($$Integer$$, default: `$$5683$$`)*
+//end::configuration-properties[]
+
+== Build
+
+```
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+
+You can find the corresponding binder based projects here. You can then cd into one of the folders and build it:
+
+$ ./mvnw clean package
+```
+
+=== Examples
+
+```
+java -jar coap-server-source-<binder>.jar --coap.server.port=5683 --coap.server.path=test
+
+```
+
+use the CoAP Shell to test it:
+```
+server-unknown:>connect coap://127.0.0.1:5683
+available
+coap://127.0.0.1:5683:>discover
+┌─────────────────┬──────────────────┬─────────────────┬──────────────┬─────────┬────────────────┐
+│Path [href]      │Resource Type [rt]│Content Type [ct]│Interface [if]│Size [sz]│Observable [obs]│
+├─────────────────┼──────────────────┼─────────────────┼──────────────┼─────────┼────────────────┤
+│/.well-known/core│                  │                 │              │         │                │
+│/test            │                  │                 │              │         │                │
+└─────────────────┴──────────────────┴─────────────────┴──────────────┴─────────┴────────────────┘
+```
+
+To enable `DTLS` security run:
+```
+java -jar coap-server-source-<binder>.jar --coap.server.port=5684 --coap.server.path=maxi --coap.dtls.identity=maxi \
+   --coap.dtls.secret=maxi --coap.dtls.trustStoreLocation=file:<full-path-to>/cacerts \
+   --coap.dtls.keyStoreLocation=file:<full-path-to>/clientKeyStore.jks --coap.dtls.dtlsEnabled=true
+
+```
+
+//end::ref-doc[]

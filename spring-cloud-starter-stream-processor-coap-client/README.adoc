@@ -1,0 +1,64 @@
+//tag::ref-doc[]
+= CoAP Client Processor
+
+A processor app that makes requests to an CoAP resource and emits the response body as a message payload. This processor
+can be combined, e.g., with a time source app to periodically poll results from a CoAP resource.
+
+== Input
+=== Headers
+Any Required CoAP headers must be explicitly set via the `headers-expression` property. See examples below.
+Header values may also be used to construct the request body when referenced in the `body-expression` property. (TODO)
+
+=== Payload
+The Message payload may be any Java type.
+Generally, standard Java types such as String(e.g., JSON, XML) or byte array payloads are recommended.
+A Map should work without too much effort.
+By default, the payload will become CoAP request body (if needed).
+You may also set the `body-expression` property to construct a value derived from the Message, or `body` to use a static (literal) value.
+
+The `expected-response-type` property, `String.class` by default, may be set to any class in your application class path.
+(Note user defined payload types will require adding required dependencies to your pom file)
+
+== Output
+
+=== Headers
+No CoAP message headers are mapped to the outbound Message.
+
+=== Payload
+The raw output object is a wrapped CoapResponse. Any of its fields (e.g., `body`, `headers`) or accessor methods (`statusCode`) may be referenced as part of the `reply-expression`.
+By default the outbound Message payload is the response body.
+
+== Options
+
+The **$$file$$** $$sink$$ has the following options:
+
+//tag::configuration-properties[]
+$$coap.client.accept-type$$:: $$<documentation missing>$$ *($$String$$, default: `$$text/plain$$`)*
+$$coap.client.body$$:: $$The (static) request body; if neither this nor bodyExpression is provided, the payload will be used.$$ *($$Object$$, default: `$$<none>$$`)*
+$$coap.client.body-expression$$:: $$A SpEL expression to derive the request body from the incoming message.$$ *($$Expression$$, default: `$$<none>$$`)*
+$$coap.client.format-type$$:: $$<documentation missing>$$ *($$String$$, default: `$$text/plain$$`)*
+$$coap.client.headers-expression$$:: $$A SpEL expression used to derive the http headers map to use.$$ *($$Expression$$, default: `$$<none>$$`)*
+$$coap.client.method$$:: $$The kind of coap method to use.$$ *($$Code$$, default: `$$<none>$$`, possible values: `GET`,`POST`,`PUT`,`DELETE`,`FETCH`,`PATCH`)*
+$$coap.client.reply-expression$$:: $$A SpEL expression used to compute the final result, applied against the whole http response.$$ *($$Expression$$, default: `$$body$$`)*
+$$coap.client.url$$:: $$The URL to issue an http request to, as a static value.$$ *($$String$$, default: `$$<none>$$`)*
+$$coap.client.url-expression$$:: $$A SpEL expression against incoming message to determine the URL to use.$$ *($$Expression$$, default: `$$<none>$$`)*
+//end::configuration-properties[]
+
+== Build
+
+```
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+
+You can find the corresponding binder based projects here. You can then cd into one of the folders and build it:
+
+$ ./mvnw clean package
+```
+
+=== Examples
+
+```
+stream create coapClient --definition "time | coap-client --coap.client.url=coap://californium.eclipse.org:5683/create1 --coap.client.method=PUT --coap.client.bodyExpression='payload' | log"
+```
+
+//end::ref-doc[]
