@@ -1,12 +1,33 @@
 # CoAP Sources and Processor
 
+https://en.wikipedia.org/wiki/Constrained_Application_Protocol[CoAP] is a RESTful web transfer protocol specialized for use with constrained nodes and constrained networks in the Internet of Things (IoT).
+
+The SCDF CoAP modules, integrate with the CoAP networks, allowing to monitor or update the CoAP resources (sensors, controller, lamps ..) in real time.
+The `coap:` and `coaps:` protocol schemas are supported allowing `UDP` and `DTLS` transports. The `coap-server` source application is a `CoAP Server` itself and as such can receive
+CoAP requests directly from other CoAP resources.
+
+TIP: The https://github.com/tzolov/coap-shell[CoAP Shell] can help to test and explore the CoAP app starters.
+
+
 To learn more about this application and the supported properties, please review the following link.
 
 ## CoAP Observe Source
+Subscribes to CoAP `observable` resources. Listens for CoAP resource updates and emits the body as a message payload.
+
 include::spring-cloud-starter-stream-source-coap-observe/README.adoc[]
 
+image:https://raw.githubusercontent.com/tzolov/coap/master/coap-app-starters-common/src/test/resources/doc/scdf-coap-observe-source.png[CoAP Observer Source]
+
 ## CoAP Server Source
+Acts as a CoAP Server, listens for CoAP requests and emits the body as a message payload.
+
 include::spring-cloud-starter-stream-source-coap-server/README.adoc[]
 
+image:https://raw.githubusercontent.com/tzolov/coap/master/coap-app-starters-common/src/test/resources/doc/scdf-coap-server-source.png[CoAP Server Source]
+
 ## CoAP Client processor
+On input message, send a request to an external CoAP Resource and emits the response body as a message payload to the output
+
 include::spring-cloud-starter-stream-processor-coap-client/README.adoc[]
+
+image:https://raw.githubusercontent.com/tzolov/coap/master/coap-app-starters-common/src/test/resources/doc/scdf-coap-client-processor.png[CoAP Client Processor]

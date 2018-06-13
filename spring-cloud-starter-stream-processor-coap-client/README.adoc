@@ -1,7 +1,7 @@
 //tag::ref-doc[]
 = CoAP Client Processor
 
-A processor app that makes requests to an CoAP resource and emits the response body as a message payload. This processor
+On every input message executes a request to an external CoAP Resource and emits the response body as a message payload to the output. This processor
 can be combined, e.g., with a time source app to periodically poll results from a CoAP resource.
 
 == Input

@@ -1,7 +1,7 @@
 //tag::ref-doc[]
 = CoAP Server Source
 
-A source application that listens for CoAP requests and emits the body as a message payload.
+Acts as a CoAP Server, listens for CoAP requests and emits the body as a message payload.
 The message Content-Type is extracted from the request format type if available or defaults to `text/*` otherwise.
 The payload is byte array.
 

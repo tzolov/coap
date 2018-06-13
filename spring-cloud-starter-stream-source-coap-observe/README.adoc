@@ -1,7 +1,7 @@
 //tag::ref-doc[]
 = CoAP Observe Source
 
-Subscribes to CoAP `observable` resources. Listens for CoAP requests updates and emits the body as a message payload.
+Subscribes to CoAP `observable` resources. Listens for CoAP resource updates and emits the body as a message payload.
 The message Content-Type is extracted from the request format type if available or defaults to `text/*` otherwise.
 The payload is byte array.
 
@@ -11,11 +11,9 @@ N/A
 
 == Output
 
-=== mode = contents
-
 ==== Headers:
 
-* * `Content-Type` - Request/s format type
+* `Content-Type` - Request/s format type
 
 ==== Payload:
 
