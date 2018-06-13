@@ -16,9 +16,11 @@
 
 package org.springframework.cloud.stream.app.coap;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -27,14 +29,47 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties("coap.dtls")
 @Validated
 public class CoapDtlsProperties {
+
+	/**
+	 * Enable or disable the DTLS transport encryption
+	 */
+	private boolean enabled = false;
+
+	/**
+	 * PSK identity if required to authenticate with teh CoAP Server
+	 */
 	private String identity;
+
+	/**
+	 * PSK password if required to authenticate with teh CoAP Server
+	 */
 	private String secret;
+
+	/**
+	 * DTLS Trust store location (supports file:// , classpath:/ or http:/)
+	 */
 	private String trustStoreLocation = "classpath:/cacerts";
+
+	/**
+	 * Trust store password
+	 */
 	private String trustStorePassword = "changeit";
+
+	/**
+	 * DTLS key store location. (supports file:// , classpath:/ or http:/)
+	 */
 	private String keyStoreLocation = "classpath:/clientKeyStore.jks";
-	private String keyStorePassword = "clientPass";
+
+	/**
+	 * Keystore user alias
+	 */
 	private String keyStoreAlias = "client";
-	private boolean dtlsEnabled = false;
+
+	/**
+	 * Keystore password
+	 */
+	private String keyStorePassword = "clientPass";
+
 
 	public String getIdentity() {
 		return identity;
@@ -97,11 +132,19 @@ public class CoapDtlsProperties {
 		this.keyStoreAlias = keyStoreAlias;
 	}
 
-	public boolean isDtlsEnabled() {
-		return dtlsEnabled;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setDtlsEnabled(boolean dtlsEnabled) {
-		this.dtlsEnabled = dtlsEnabled;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@AssertTrue(message = "Enabled DTLS requires valid 'trustStoreLocation', 'trustStorePassword', 'keyStoreLocation'" +
+			", 'keyStoreAlias' and 'keyStorePassword'")
+	public boolean isDtlsEnabledRequiredProperties() {
+		return (!this.enabled) ? true : StringUtils.hasText(this.trustStoreLocation)
+				&& StringUtils.hasText(this.trustStorePassword) && StringUtils.hasText(this.keyStoreLocation)
+				&& StringUtils.hasText(this.keyStoreAlias) && StringUtils.hasText(this.keyStorePassword);
 	}
 }

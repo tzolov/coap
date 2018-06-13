@@ -28,7 +28,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * Properties for the coap client processor.
+ * Properties for the CoAP client processor.
  *
  * @author Christian Tzolov
  */
@@ -39,7 +39,7 @@ public class CoapClientProcessorProperties {
 	private static final CoAP.Code DEFAULT_COAP_METHOD = CoAP.Code.GET;
 
 	/**
-	 * The URL to issue an http request to, as a static value.
+	 * The URL to issue an CoAP request to, as a static value.
 	 */
 	private String url;
 
@@ -53,8 +53,14 @@ public class CoapClientProcessorProperties {
 	 */
 	private CoAP.Code method = DEFAULT_COAP_METHOD;
 
+	/**
+	 * Request's body content type
+	 */
 	private String formatType = "text/plain";
 
+	/**
+	 * Request's expected response type
+	 */
 	private String acceptType = "text/plain";
 
 	/**
@@ -68,14 +74,14 @@ public class CoapClientProcessorProperties {
 	private Expression bodyExpression;
 
 	/**
-	 * A SpEL expression used to derive the http headers map to use.
+	 * A SpEL expression used to derive the CoAP headers map to use.
 	 */
 	private Expression headersExpression;
 
 	/**
-	 * A SpEL expression used to compute the final result, applied against the whole http response.
+	 * A SpEL expression used to compute the final result, applied against the whole CoAP response.
 	 */
-	private Expression replyExpression = new SpelExpressionParser().parseExpression("body");
+	private Expression replyExpression = new SpelExpressionParser().parseExpression("payload");
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -142,7 +148,7 @@ public class CoapClientProcessorProperties {
 	public void setHeadersExpression(Expression headersExpression) {
 		this.headersExpression = headersExpression;
 	}
-	
+
 	@NotNull
 	public Expression getReplyExpression() {
 		return replyExpression;

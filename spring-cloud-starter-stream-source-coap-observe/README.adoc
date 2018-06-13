@@ -26,7 +26,15 @@ A `byte[]` filled with the request payload.
 The **$$file$$** $$source$$ has the following options:
 
 //tag::configuration-properties[]
-$$coap.observe.url$$:: $$<documentation missing>$$ *($$String$$, default: `$$<none>$$`)*
+$$coap.dtls.enabled$$:: $$Enable or disable the DTLS transport encryption$$ *($$Boolean$$, default: `$$false$$`)*
+$$coap.dtls.identity$$:: $$PSK identity if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
+$$coap.dtls.key-store-alias$$:: $$Keystore user alias$$ *($$String$$, default: `$$client$$`)*
+$$coap.dtls.key-store-location$$:: $$DTLS key store location. (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$classpath:/clientKeyStore.jks$$`)*
+$$coap.dtls.key-store-password$$:: $$Keystore password$$ *($$String$$, default: `$$clientPass$$`)*
+$$coap.dtls.secret$$:: $$PSK password if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
+$$coap.dtls.trust-store-location$$:: $$DTLS Trust store location (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$classpath:/cacerts$$`)*
+$$coap.dtls.trust-store-password$$:: $$Trust store password$$ *($$String$$, default: `$$changeit$$`)*
+$$coap.observe.url$$:: $$CoAP Resource uri to observer$$ *($$String$$, default: `$$<none>$$`)*
 //end::configuration-properties[]
 
 The `ref` option is useful in some cases in which the file contents are large and it would be more efficient to send the file path.
@@ -50,9 +58,9 @@ java -jar coap-observe-source.jar --coap.observe.url=coap://californium.eclipse.
 
 with `DTSL`
 ```
-java -jar coap-observe-source.jar --coap.observe.url=coaps://californium.eclipse.org:5684/obs --coap.dtls.dtlsEnabled=true \
+java -jar coap-observe-source.jar --coap.observe.url=coaps://californium.eclipse.org:5684/obs --coap.dtls.enabled=true \
     --coap.dtls.keyStoreLocation=file:/<full path>/clientKeyStore.jks \
-    --coap.trustStoreLocation=file:/<full path>/cacerts
+    --coap.dtls.trustStoreLocation=file:/<full path>/cacerts
 ```
 
 //end::ref-doc[]

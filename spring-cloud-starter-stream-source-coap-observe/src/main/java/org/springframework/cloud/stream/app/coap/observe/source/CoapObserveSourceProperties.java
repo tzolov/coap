@@ -28,6 +28,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class CoapObserveSourceProperties {
 
+	/**
+	 * CoAP Resource uri to observer
+	 */
 	private String url;
 
 	public String getUrl() {

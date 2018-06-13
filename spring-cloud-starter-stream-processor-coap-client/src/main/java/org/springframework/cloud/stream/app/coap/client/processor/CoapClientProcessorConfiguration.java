@@ -16,19 +16,17 @@
 
 package org.springframework.cloud.stream.app.coap.client.processor;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.URI;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
+import org.eclipse.californium.core.Utils;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.eclipse.californium.core.coap.Request;
-import org.eclipse.californium.core.coap.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -64,10 +62,10 @@ public class CoapClientProcessorConfiguration {
 	@MessageEndpoint
 	public static class CoapClientProcessor {
 
-		private static final Log LOG = LogFactory.getLog(CoapClientProcessor.class);
+		private static final Log logger = LogFactory.getLog(CoapClientProcessor.class);
 
 		@Autowired
-		private CoapClientProcessorProperties properties;
+		private CoapClientProcessorProperties clientProperties;
 
 		@Autowired
 		private CoapClient coapClient;
@@ -79,8 +77,8 @@ public class CoapClientProcessorConfiguration {
 				// TODO
 				//HttpHeaders headers = new HttpHeaders();
 				//
-				//if (properties.getHeadersExpression() != null) {
-				//	Map<?, ?> headersMap = properties.getHeadersExpression().getValue(message, Map.class);
+				//if (clientProperties.getHeadersExpression() != null) {
+				//	Map<?, ?> headersMap = clientProperties.getHeadersExpression().getValue(message, Map.class);
 				//	for (Map.Entry<?, ?> header : headersMap.entrySet()) {
 				//		if (header.getKey() != null && header.getValue() != null) {
 				//			headers.add(header.getKey().toString(),
@@ -89,14 +87,14 @@ public class CoapClientProcessorConfiguration {
 				//	}
 				//}
 
-				CoAP.Code method = properties.getMethod();
-				String url = properties.getUrlExpression().getValue(message, String.class);
+				CoAP.Code method = this.clientProperties.getMethod();
+				String url = this.clientProperties.getUrlExpression().getValue(message, String.class);
 				Object body = null;
-				if (properties.getBody() != null) {
-					body = properties.getBody();
+				if (this.clientProperties.getBody() != null) {
+					body = this.clientProperties.getBody();
 				}
-				else if (properties.getBodyExpression() != null) {
-					body = properties.getBodyExpression().getValue(message);
+				else if (this.clientProperties.getBodyExpression() != null) {
+					body = this.clientProperties.getBodyExpression().getValue(message);
 				}
 				else {
 					body = message.getPayload();
@@ -108,65 +106,34 @@ public class CoapClientProcessorConfiguration {
 				request.setURI(uri);
 				request.setPayload(toByteArray(body));
 
-				int format = MediaTypeRegistry.parse(properties.getFormatType());
-				Assert.isTrue(format != -1, "Unsupported Format Type: " + properties.getFormatType());
+				int format = MediaTypeRegistry.parse(this.clientProperties.getFormatType());
+				Assert.isTrue(format != -1, "Unsupported Format Type: " + this.clientProperties.getFormatType());
 				request.getOptions().setContentFormat(format);
 
-				int accept = MediaTypeRegistry.parse(properties.getAcceptType());
-				Assert.isTrue(accept != -1, "Unsupported Accept Type: " + properties.getAcceptType());
+				int accept = MediaTypeRegistry.parse(this.clientProperties.getAcceptType());
+				Assert.isTrue(accept != -1, "Unsupported Accept Type: " + this.clientProperties.getAcceptType());
 				request.getOptions().setAccept(accept);
 
-				CoapResponse response = coapClient.advanced(request);
+				logger.debug("CoAP Request: " + Utils.prettyPrint(request));
 
-				return properties.getReplyExpression().getValue(new CoapResponseWrapper(response));
+				CoapResponse response = this.coapClient.advanced(request);
+
+				return this.clientProperties.getReplyExpression().getValue(response);
 			}
 			catch (Exception e) {
-				LOG.warn("Error in HTTP request", e);
+				logger.warn("Error in HTTP request", e);
 				return null;
 			}
 		}
 
-		public static class CoapResponseWrapper extends CoapResponse {
-
-			public CoapResponseWrapper(CoapResponse response) {
-				this(response.advanced());
+		public static byte[] toByteArray(Object object) throws IOException {
+			if (object == null) {
+				return new byte[0];
 			}
-
-			/**
-			 * Instantiates a new coap response.
-			 *
-			 * @param response the response
-			 */
-			public CoapResponseWrapper(Response response) {
-				super(response);
+			else if (object instanceof byte[]) {
+				return (byte[]) object;
 			}
-
-			public byte[] getBody() {
-				return this.getPayload();
-			}
+			return object.toString().getBytes();
 		}
-
-		public static byte[] toByteArray(Object obj) throws IOException {
-			byte[] bytes = null;
-			ByteArrayOutputStream bos = null;
-			ObjectOutputStream oos = null;
-			try {
-				bos = new ByteArrayOutputStream();
-				oos = new ObjectOutputStream(bos);
-				oos.writeObject(obj);
-				oos.flush();
-				bytes = bos.toByteArray();
-			}
-			finally {
-				if (oos != null) {
-					oos.close();
-				}
-				if (bos != null) {
-					bos.close();
-				}
-			}
-			return bytes;
-		}
-
 	}
 }

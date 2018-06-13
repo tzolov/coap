@@ -54,11 +54,11 @@ public class CaopUtility {
 		return MediaTypeRegistry.toString(contentTypeId);
 	}
 
-	public CoapClient createCoapClient(String serverUrl, CoapDtlsProperties properties) {
+	public CoapClient createCoapClient(String serverUrl, CoapDtlsProperties dtlsProperties) {
 		final CoapClient coapClient = new CoapClient(serverUrl);
 
-		if (properties.isDtlsEnabled()) {
-			final DTLSConnector dtlsConnector = createDtlsConnector(0, properties);
+		if (dtlsProperties.isEnabled()) {
+			final DTLSConnector dtlsConnector = createDtlsConnector(0, dtlsProperties);
 
 			CoapEndpoint coapEndpoint = new CoapEndpoint.CoapEndpointBuilder()
 					.setNetworkConfig(NetworkConfig.getStandard())
@@ -71,13 +71,13 @@ public class CaopUtility {
 	}
 
 
-	public CoapServer createCoapServer(int port, CoapDtlsProperties properties) {
+	public CoapServer createCoapServer(int port, CoapDtlsProperties dtlsProperties) {
 
-		if (properties.isDtlsEnabled()) {
-			Assert.hasText(properties.getIdentity(), "PKS identity is required for Server");
-			Assert.hasText(properties.getSecret(), "PKS secret is required for Server");
+		if (dtlsProperties.isEnabled()) {
+			Assert.hasText(dtlsProperties.getIdentity(), "PKS identity is required for Server");
+			Assert.hasText(dtlsProperties.getSecret(), "PKS secret is required for Server");
 
-			final DTLSConnector dtlsConnector = createDtlsConnector(port, properties);
+			final DTLSConnector dtlsConnector = createDtlsConnector(port, dtlsProperties);
 
 			CoapEndpoint coapEndpoint = new CoapEndpoint.CoapEndpointBuilder()
 					.setNetworkConfig(NetworkConfig.getStandard())
@@ -86,7 +86,8 @@ public class CaopUtility {
 			CoapServer server = new CoapServer();
 			server.addEndpoint(coapEndpoint);
 			return server;
-		} else {
+		}
+		else {
 			return new CoapServer();
 		}
 	}
