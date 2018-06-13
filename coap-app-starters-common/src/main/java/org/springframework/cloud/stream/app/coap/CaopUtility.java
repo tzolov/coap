@@ -57,7 +57,7 @@ public class CaopUtility {
 	public CoapClient createCoapClient(String serverUrl, CoapDtlsProperties dtlsProperties) {
 		final CoapClient coapClient = new CoapClient(serverUrl);
 
-		if (dtlsProperties.isEnabled()) {
+		if (dtlsProperties.isWithDtls()) {
 			final DTLSConnector dtlsConnector = createDtlsConnector(0, dtlsProperties);
 
 			CoapEndpoint coapEndpoint = new CoapEndpoint.CoapEndpointBuilder()
@@ -73,7 +73,7 @@ public class CaopUtility {
 
 	public CoapServer createCoapServer(int port, CoapDtlsProperties dtlsProperties) {
 
-		if (dtlsProperties.isEnabled()) {
+		if (dtlsProperties.isWithDtls()) {
 			Assert.hasText(dtlsProperties.getIdentity(), "PKS identity is required for Server");
 			Assert.hasText(dtlsProperties.getSecret(), "PKS secret is required for Server");
 

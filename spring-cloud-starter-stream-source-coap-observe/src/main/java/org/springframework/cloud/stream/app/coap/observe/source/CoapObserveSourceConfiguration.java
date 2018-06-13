@@ -90,7 +90,7 @@ public class CoapObserveSourceConfiguration {
 			emitter.onDispose(() -> {
 				logger.debug("Emitter cancellation, proactive cancel for coap observer");
 				observe.proactiveCancel();
-				if (this.dtlsProperties.isEnabled()) {
+				if (this.dtlsProperties.isWithDtls()) {
 					this.coapClient.getEndpoint().destroy();
 					this.coapClient.shutdown();
 				}

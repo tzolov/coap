@@ -42,14 +42,14 @@ $$coap.client.method$$:: $$The kind of coap method to use.$$ *($$Code$$, default
 $$coap.client.reply-expression$$:: $$A SpEL expression used to compute the final result, applied against the whole CoAP response.$$ *($$Expression$$, default: `$$payload$$`)*
 $$coap.client.url$$:: $$The URL to issue an CoAP request to, as a static value.$$ *($$String$$, default: `$$<none>$$`)*
 $$coap.client.url-expression$$:: $$A SpEL expression against incoming message to determine the URL to use.$$ *($$Expression$$, default: `$$<none>$$`)*
-$$coap.dtls.enabled$$:: $$Enable or disable the DTLS transport encryption$$ *($$Boolean$$, default: `$$false$$`)*
 $$coap.dtls.identity$$:: $$PSK identity if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
 $$coap.dtls.key-store-alias$$:: $$Keystore user alias$$ *($$String$$, default: `$$client$$`)*
-$$coap.dtls.key-store-location$$:: $$DTLS key store location. (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$classpath:/clientKeyStore.jks$$`)*
+$$coap.dtls.key-store-location$$:: $$DTLS key store location. (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$file:/tmp/clientKeyStore.jks$$`)*
 $$coap.dtls.key-store-password$$:: $$Keystore password$$ *($$String$$, default: `$$clientPass$$`)*
 $$coap.dtls.secret$$:: $$PSK password if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
-$$coap.dtls.trust-store-location$$:: $$DTLS Trust store location (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$classpath:/cacerts$$`)*
+$$coap.dtls.trust-store-location$$:: $$DTLS Trust store location (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$file:/tmp/cacerts$$`)*
 $$coap.dtls.trust-store-password$$:: $$Trust store password$$ *($$String$$, default: `$$changeit$$`)*
+$$coap.dtls.with-dtls$$:: $$Enable or disable the DTLS transport encryption$$ *($$Boolean$$, default: `$$false$$`)*
 //end::configuration-properties[]
 
 == Build

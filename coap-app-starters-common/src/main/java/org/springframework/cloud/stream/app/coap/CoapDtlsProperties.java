@@ -33,7 +33,7 @@ public class CoapDtlsProperties {
 	/**
 	 * Enable or disable the DTLS transport encryption
 	 */
-	private boolean enabled = false;
+	private boolean withDtls = false;
 
 	/**
 	 * PSK identity if required to authenticate with teh CoAP Server
@@ -48,7 +48,7 @@ public class CoapDtlsProperties {
 	/**
 	 * DTLS Trust store location (supports file:// , classpath:/ or http:/)
 	 */
-	private String trustStoreLocation = "classpath:/cacerts";
+	private String trustStoreLocation = "file:/tmp/cacerts"; //"classpath:/cacerts";
 
 	/**
 	 * Trust store password
@@ -58,7 +58,7 @@ public class CoapDtlsProperties {
 	/**
 	 * DTLS key store location. (supports file:// , classpath:/ or http:/)
 	 */
-	private String keyStoreLocation = "classpath:/clientKeyStore.jks";
+	private String keyStoreLocation = "file:/tmp/clientKeyStore.jks";//"classpath:/clientKeyStore.jks";
 
 	/**
 	 * Keystore user alias
@@ -132,18 +132,18 @@ public class CoapDtlsProperties {
 		this.keyStoreAlias = keyStoreAlias;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
+	public boolean isWithDtls() {
+		return withDtls;
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setWithDtls(boolean withDtls) {
+		this.withDtls = withDtls;
 	}
 
 	@AssertTrue(message = "Enabled DTLS requires valid 'trustStoreLocation', 'trustStorePassword', 'keyStoreLocation'" +
 			", 'keyStoreAlias' and 'keyStorePassword'")
 	public boolean isDtlsEnabledRequiredProperties() {
-		return (!this.enabled) ? true : StringUtils.hasText(this.trustStoreLocation)
+		return (!this.withDtls) ? true : StringUtils.hasText(this.trustStoreLocation)
 				&& StringUtils.hasText(this.trustStorePassword) && StringUtils.hasText(this.keyStoreLocation)
 				&& StringUtils.hasText(this.keyStoreAlias) && StringUtils.hasText(this.keyStorePassword);
 	}

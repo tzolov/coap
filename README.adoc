@@ -8,6 +8,9 @@ CoAP requests directly from other CoAP resources.
 
 TIP: The https://github.com/tzolov/coap-shell[CoAP Shell] can help to test and explore the CoAP app starters.
 
+image:https://raw.githubusercontent.com/tzolov/coap/master/coap-app-starters-common/src/test/resources/doc/scdf-coap-integration.gif[CoAP SCDF Demo]
+
+https://youtu.be/P5qs1x13TpQ[Demo Video]
 
 To learn more about this application and the supported properties, please review the following link.
 

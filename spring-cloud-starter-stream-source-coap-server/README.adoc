@@ -30,14 +30,14 @@ N/A
 The **$$file$$** $$sink$$ has the following options:
 
 //tag::configuration-properties[]
-$$coap.dtls.enabled$$:: $$Enable or disable the DTLS transport encryption$$ *($$Boolean$$, default: `$$false$$`)*
 $$coap.dtls.identity$$:: $$PSK identity if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
 $$coap.dtls.key-store-alias$$:: $$Keystore user alias$$ *($$String$$, default: `$$client$$`)*
-$$coap.dtls.key-store-location$$:: $$DTLS key store location. (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$classpath:/clientKeyStore.jks$$`)*
+$$coap.dtls.key-store-location$$:: $$DTLS key store location. (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$file:/tmp/clientKeyStore.jks$$`)*
 $$coap.dtls.key-store-password$$:: $$Keystore password$$ *($$String$$, default: `$$clientPass$$`)*
 $$coap.dtls.secret$$:: $$PSK password if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
-$$coap.dtls.trust-store-location$$:: $$DTLS Trust store location (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$classpath:/cacerts$$`)*
+$$coap.dtls.trust-store-location$$:: $$DTLS Trust store location (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$file:/tmp/cacerts$$`)*
 $$coap.dtls.trust-store-password$$:: $$Trust store password$$ *($$String$$, default: `$$changeit$$`)*
+$$coap.dtls.with-dtls$$:: $$Enable or disable the DTLS transport encryption$$ *($$Boolean$$, default: `$$false$$`)*
 $$coap.server.path$$:: $$CoAP Resource path withing the CoAP Server$$ *($$String$$, default: `$$/scdf$$`)*
 $$coap.server.port$$:: $$CoAP Server port.$$ *($$Integer$$, default: `$$5683$$`)*
 //end::configuration-properties[]
@@ -77,7 +77,7 @@ To enable `DTLS` security run:
 ```
 java -jar coap-server-source-<binder>.jar --coap.server.port=5684 --coap.server.path=maxi --coap.dtls.identity=maxi \
    --coap.dtls.secret=maxi --coap.dtls.trustStoreLocation=file:<full-path-to>/cacerts \
-   --coap.dtls.keyStoreLocation=file:<full-path-to>/clientKeyStore.jks --coap.dtls.enabled=true
+   --coap.dtls.keyStoreLocation=file:<full-path-to>/clientKeyStore.jks --coap.dtls.withDtls=true
 
 ```
 
