@@ -45,8 +45,6 @@ import org.springframework.util.StringUtils;
  */
 public class CaopUtility {
 
-	public static final int DTLS_PORT = NetworkConfig.getStandard().getInt(NetworkConfig.Keys.COAP_SECURE_PORT);
-
 	public static String contentTypeName(int contentTypeId) {
 		if (contentTypeId < 0) { // The undefined content type is set to -1
 			contentTypeId = 0; // 0 -> TEXT/PLAIN
@@ -112,7 +110,7 @@ public class CaopUtility {
 							keyStore.getCertificateChain(properties.getKeyStoreAlias()), true)
 					.setTrustStore(trustedCertificates)
 					.setMaxConnections(100)
-					.setStaleConnectionThreshold(60);
+					.setStaleConnectionThreshold(properties.getStaleConnectionThreshold());
 
 			if (StringUtils.hasText(properties.getIdentity()) && StringUtils.hasText(properties.getSecret())) {
 				builder.setPskStore(new StaticPskStore(properties.getIdentity(), properties.getSecret().getBytes()));

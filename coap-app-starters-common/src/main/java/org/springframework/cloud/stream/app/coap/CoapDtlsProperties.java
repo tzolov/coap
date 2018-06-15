@@ -18,6 +18,7 @@ package org.springframework.cloud.stream.app.coap;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.StringUtils;
@@ -69,6 +70,12 @@ public class CoapDtlsProperties {
 	 * Keystore password
 	 */
 	private String keyStorePassword = "clientPass";
+
+
+	/**
+	 * Keep IDLE connections alive
+	 */
+	private int staleConnectionThreshold = 48 * 60 * 60; // 48 hours (in SEC)
 
 
 	public String getIdentity() {
@@ -138,6 +145,15 @@ public class CoapDtlsProperties {
 
 	public void setWithDtls(boolean withDtls) {
 		this.withDtls = withDtls;
+	}
+
+	@PositiveOrZero
+	public int getStaleConnectionThreshold() {
+		return staleConnectionThreshold;
+	}
+
+	public void setStaleConnectionThreshold(int staleConnectionThreshold) {
+		this.staleConnectionThreshold = staleConnectionThreshold;
 	}
 
 	@AssertTrue(message = "Enabled DTLS requires valid 'trustStoreLocation', 'trustStorePassword', 'keyStoreLocation'" +

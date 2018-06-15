@@ -29,6 +29,7 @@ $$coap.dtls.key-store-alias$$:: $$Keystore user alias$$ *($$String$$, default: `
 $$coap.dtls.key-store-location$$:: $$DTLS key store location. (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$file:/tmp/clientKeyStore.jks$$`)*
 $$coap.dtls.key-store-password$$:: $$Keystore password$$ *($$String$$, default: `$$clientPass$$`)*
 $$coap.dtls.secret$$:: $$PSK password if required to authenticate with teh CoAP Server$$ *($$String$$, default: `$$<none>$$`)*
+$$coap.dtls.stale-connection-threshold$$:: $$Keep IDLE connections alive$$ *($$Integer$$, default: `$$0$$`)*
 $$coap.dtls.trust-store-location$$:: $$DTLS Trust store location (supports file:// , classpath:/ or http:/)$$ *($$String$$, default: `$$file:/tmp/cacerts$$`)*
 $$coap.dtls.trust-store-password$$:: $$Trust store password$$ *($$String$$, default: `$$changeit$$`)*
 $$coap.dtls.with-dtls$$:: $$Enable or disable the DTLS transport encryption$$ *($$Boolean$$, default: `$$false$$`)*
