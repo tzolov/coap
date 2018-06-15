@@ -33,6 +33,13 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<scm>
+		<connection>scm:git:https://github.com/tzolov/coap</connection>
+		<developerConnection>scm:git:git@github.com:tzolov/coap.git</developerConnection>
+		<url>https://github.com/tzolov/coap</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<distributionManagement>
 		<repository>
 			<id>bintray-bigdata</id>
