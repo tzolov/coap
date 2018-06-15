@@ -33,7 +33,6 @@
 			<plugin>
 				<groupId>org.springframework.cloud.stream.app.plugin</groupId>
 				<artifactId>spring-cloud-stream-app-maven-plugin</artifactId>
-				<version>1.2.4.BUILD-SNAPSHOT</version>
 				<configuration>
 					<generatedProjectHome>${session.executionRootDirectory}/apps</generatedProjectHome>
 					<generatedProjectVersion>${project.version}</generatedProjectVersion>
