@@ -45,6 +45,10 @@
 			<id>bintray-bigdata</id>
 			<url>https://api.bintray.com/maven/big-data/maven/app-starters-coap</url>
 		</repository>
+		<snapshotRepository>
+			<id>bintray-bigdata</id>
+			<url>https://api.bintray.com/maven/big-data/maven/app-starters-coap</url>
+		</snapshotRepository>
 		<site />
 	</distributionManagement>
 
