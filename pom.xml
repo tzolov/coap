@@ -34,7 +34,7 @@
 	</dependencyManagement>
 
 	<scm>
-		<connection>scm:git:https://github.com/tzolov/coap</connection>
+		<connection>scm:git:git@github.com:tzolov/coap.git</connection>
 		<developerConnection>scm:git:git@github.com:tzolov/coap.git</developerConnection>
 		<url>https://github.com/tzolov/coap</url>
 		<tag>HEAD</tag>
@@ -58,7 +58,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4.2</version>
+					<version>2.5.3</version>
 					<configuration>
 						<tagNameFormat>v@{project.version}</tagNameFormat>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
